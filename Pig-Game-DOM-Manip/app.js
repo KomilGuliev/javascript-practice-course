@@ -100,3 +100,141 @@ function init() {
 	document.querySelector('.player-1-panel').classList.remove('active');
 }
 ***************************************/
+
+
+
+//////////////////////////////////////////////////////////////////////
+//Pig Game by Object
+
+/************************************
+
+function newPlayer(name, number) {
+	return {
+		name: name,
+		number: number,
+		playerNameUI: document.querySelector('#name-' + number),
+		scoreUI: document.querySelector('#score-' + number),
+		currentUI: document.querySelector('#current-' + number),
+		playerPanel: document.querySelector('.player-' + number + '-panel'),
+		toggleActive: function() {
+			this.playerPanel.classList.toggle('active');
+		},
+		setActive: function () {
+			this.playerPanel.classList.add('active');
+		},
+		setCurrentUI: function(roundScore) {
+			this.currentUI.textContent = roundScore;
+		},
+		setWinner: function() {
+			this.playerPanel.classList.add('winner');
+			this.playerNameUI.textContent = 'Winner!';
+		},
+		setScore: function(roundScore) {
+			this.score += roundScore;
+			this.scoreUI.textContent = this.score;
+		},
+		rollDice: function() {
+			return Math.floor(Math.random() * 6) + 1;
+			
+		},
+		init: function() {
+			this.score = 0;
+			this.scoreUI.textContent = '0';
+			this.currentUI.textContent = '0';
+			this.playerNameUI.textContent = this.name;
+			this.playerPanel.classList.remove('winner');
+
+		}
+	}
+}
+
+var GameController = {
+	init: function() {
+		this.roundScore = 0;
+
+		this.players[0] = newPlayer('John',0);
+		this.players[1] = newPlayer('Komil',1);
+
+		this.players[0].init();
+		this.players[1].init();
+
+		//console.log(this.players);
+
+		this.activePlayer = this.players[0];
+		this.activePlayer.setActive();
+		this.activePlayerIndex = 0;
+
+		this.gamePlaying = true;
+		this.diceDOM.style.display = 'none';
+		console.log('Initialized');
+	},
+	players: [],
+	diceDOM: document.querySelector('.dice'),
+	updateDice: function(dice) {
+		this.diceDOM.style.display = 'block';
+		this.diceDOM.src = 'img/dice-' + dice + '.png';
+	},
+	rollTheDice: function() {
+		console.log(this);
+		console.log(this.gamePlaying);
+		if(this.gamePlaying) {
+			var dice = this.activePlayer.rollDice();
+			console.log(dice);
+			this.updateDice(dice);
+			if(dice !== 1) {
+				this.roundScore += dice;
+				this.activePlayer.setCurrentUI(this.roundScore);
+			} else {
+				this.nextPlayer();
+			}
+		}
+	},
+	nextPlayer: function() {
+		var activePlayer = this.activePlayer;
+		//console.log(activePlayer);
+		if(this.activePlayerIndex === 0) {
+			activePlayer.setCurrentUI('0');
+			this.activePlayerIndex = 1;
+			this.activePlayer = this.players[1];
+		} else {
+			activePlayer.setCurrentUI('0');
+			this.activePlayerIndex = 0;
+			this.activePlayer = this.players[0];
+		}
+
+		console.log(this.activePlayer);
+		this.players[0].toggleActive();
+		this.players[1].toggleActive();
+
+		this.roundScore = 0;
+		this.diceDOM.style.display = 'none';
+	},
+	holdPlayer: function() {
+		if(this.gamePlaying) {
+			this.activePlayer.setScore(this.roundScore);
+			if(this.activePlayer.score >= 20) {
+				this.activePlayer.setWinner();
+				this.activePlayer.toggleActive();
+				this.gamePlaying = false;
+			} else {
+				this.nextPlayer();
+			}
+		}
+	}
+
+};
+
+GameController.init();
+//GameController.rollTheDice();
+
+document.querySelector('.btn-new').addEventListener('click', function() {
+	GameController.init();
+});
+document.querySelector('.btn-roll').addEventListener('click', function() {
+	GameController.rollTheDice();
+});
+document.querySelector('.btn-hold').addEventListener('click', function () {
+	GameController.holdPlayer();
+});
+
+*************************************/
