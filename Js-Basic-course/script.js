@@ -267,3 +267,118 @@ jane.lastName = 'Smith';
 jane['birthYear'] = 1969;
 console.log(jane);             */
 
+/****************************************************
+ * Object and methods
+ */
+/*
+var john = {
+  firstName: 'John',
+  lastName: 'Smith',
+  birthYear: 1990,
+  family: ['Jane', 'Mark','Bob'],
+  job: 'teacher',
+  isMarried: false,
+  calcAge: function() {
+    this.age = 2019 - this.birthYear;
+  }
+};
+
+john.calcAge();
+console.log(john);
+
+
+function createObject(firstName, mass, height) {
+    var obj = {
+      firstName: firstName,
+      mass: mass,
+      height: height,
+      setBMI: function() {
+        this.BMI = this.mass / (this.height * this.height);
+      }
+    };
+    obj.setBMI();
+    return obj;
+}
+
+var John = createObject('John', 65, 1.71);
+var Mark = createObject('Mark', 71, 1.53);
+var isHigherMark = Mark.BMI > John.BMI ? true : false ;
+console.log(John, Mark);
+console.log(isHigherMark);        */
+
+
+/****************************************************************
+ * Loops and iterations
+ */
+/*
+var john = ['John', 'Smith', 1990, 'teacher', false];
+
+//For loop
+for(var i = 0; i < john.length; i++) {
+  console.log(john[i]);
+}
+
+//While loop
+var i = 0;
+while (i < john.length) {
+  console.log(john[i]);
+  i++;
+}
+
+
+//continue and break
+for(var i = 0; i < john.length; i++) {
+  if(typeof john[i] !== 'string') continue;
+  console.log(john[i]);
+}
+
+for(var i = 0; i < john.length; i++) {
+  if(typeof john[i] !== 'string') break;
+  console.log(john[i]);
+}
+***************************/
+/************************************************************
+ * CODE CHELLANGE 4
+ */
+/*
+function createObject(fullName, bills) {
+    var obj = {
+      fullName: fullName,
+      bills: bills,
+      clacTips: function() {
+        this.tips = [];
+        this.finalValues = [];
+        for(var i = 0; i < this.bills.length; i++) {
+          var percentage;
+          var bill = this.bills[i];
+          switch(true) {
+            case bill < 50:
+              percentage = .2;
+              break;
+            case bill >= 50 && bill < 200:
+              percentage = .15;
+              break;
+            default:
+              percentage = .1;
+          }
+          this.tips[i] = bill * percentage;
+          this.finalValues[i] = this.tips[i] + bill;
+        }
+      }
+    }
+    obj.clacTips();
+    return obj;
+}
+
+function calcAverage(tips) {
+  var sum = 0;
+  for(var i = 0; i < tips.length; i++) {
+    sum += tips[i];
+  }
+  return sum/tips.length;
+}
+
+var john = createObject('John Smith', [124,48,268,180,42]);
+john.average = calcAverage(john.tips);
+console.log(john);            *///
+
