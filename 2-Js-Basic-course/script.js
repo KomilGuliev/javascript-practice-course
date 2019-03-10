@@ -382,3 +382,18 @@ var john = createObject('John Smith', [124,48,268,180,42]);
 john.average = calcAverage(john.tips);
 console.log(john);            *///
 
+function P() {}
+P.prototype.name = 'P';
+function C(){}
+C.prototype = new P();
+C.prototype.name = 'C';
+
+function G(){}
+G.prototype = new C();
+G.prototype.name = 'G';
+
+var gc= new G();
+var newgs = new gc.constructor();
+alert(newgs.name);
+
+alert(Object.create(null));
